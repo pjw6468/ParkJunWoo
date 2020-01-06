@@ -1,4 +1,0 @@
-﻿  Mine.cpp
-c:\users\wnsdn\source\repos\minesweeper\minesweeper\mine.h(30): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\wnsdn\source\repos\minesweeper\minesweeper\mine.cpp(43): warning C4101: 'Rnum' :참조되지 않은 지역 변수입니다.
-  MineSweeper.vcxproj -> C:\Users\wnsdn\source\repos\MineSweeper\x64\Debug\MineSweeper.exe
