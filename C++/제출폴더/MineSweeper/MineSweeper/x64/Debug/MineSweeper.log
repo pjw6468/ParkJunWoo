@@ -1,3 +1,4 @@
 ﻿  Mine.cpp
-c:\users\wnsdn\source\repos\minesweeper\minesweeper\mine.h(38): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\wnsdn\source\repos\minesweeper\minesweeper\mine.h(40): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\wnsdn\source\repos\minesweeper\minesweeper\mine.cpp(40): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
   MineSweeper.vcxproj -> C:\Users\wnsdn\source\repos\MineSweeper\x64\Debug\MineSweeper.exe

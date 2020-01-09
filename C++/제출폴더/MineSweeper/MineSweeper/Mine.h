@@ -7,6 +7,7 @@ struct GAME_TILE
 	int NearMineCount;
 	bool MineState;
 	bool Openstatus;
+	bool FlagStatus;
 	string Icon;
 };
 class Mine
@@ -29,6 +30,7 @@ public:
 	void NearTileOpen(int TIleNum);
 	void TileOpen(int TileNum);
 	void AllShow();
+	bool WinCheck();
 	bool MineCheck(int TileNum);
 	int NearMineSearch(int ListNum);
 	inline int MineCountReturn() { return MineCount; }

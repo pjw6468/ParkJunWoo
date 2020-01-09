@@ -35,7 +35,7 @@ void Play::Playing()
 	GameMenu(m_iLevel);
 	CheckDraw(m_iLevel);
 	CursorSet(m_iLevel);
-	//MineShow(); //지뢰만 보여주는 함수
+	MineShow(); //지뢰만 보여주는 함수
 	//AllShow(); //모든거 다볼수있는 함수
 	while (m_bGameFlag)
 	{
@@ -43,26 +43,33 @@ void Play::Playing()
 		CursorDraw();
 		if (Select == CURSOR_OPEN)
 		{
-			if (MineCheck(ReturnTileNum()) == true)
-				m_bGameFlag = false;
+			if (MineCheck(ReturnTileNum()) == true && TileList[ReturnTileNum()].FlagStatus != true)
+				m_bGameFlag = true;
 			else
 			{
-				//if (NearMineSearch(ReturnTileNum()) == 0) //근처에 지뢰가 없을때
-				//{
-				TileOpen(ReturnTileNum());
+				if (TileList[ReturnTileNum()].Openstatus == false && TileList[ReturnTileNum()].FlagStatus != true)
+				{
+					TileOpen(ReturnTileNum());
 					MineSearchManage(ReturnTileNum());
-				//}
-				//else //근처에 지뢰가 있을때
-				//{
-				//	TileOpen(ReturnTileNum());
-				//}
+				}
 			}
 		}
 		else if (Select == CURSOR_FLAG)
 		{
-			MapDraw::gotoxy(TileList[ReturnTileNum()].x, TileList[ReturnTileNum()].y);
-			cout << "★";
+			if (TileList[ReturnTileNum()].Openstatus != true && TileList[ReturnTileNum()].FlagStatus != true)
+			{
+				TileList[ReturnTileNum()].FlagStatus = true;
+				MapDraw::gotoxy(TileList[ReturnTileNum()].x, TileList[ReturnTileNum()].y);
+				cout << "★";
+			}
+			else if (TileList[ReturnTileNum()].Openstatus != true && TileList[ReturnTileNum()].FlagStatus != false)
+			{
+				TileList[ReturnTileNum()].FlagStatus = false;
+				MapDraw::gotoxy(TileList[ReturnTileNum()].x, TileList[ReturnTileNum()].y);
+				cout << "■";
+			}
 		}
+		m_bGameFlag = WinCheck();
 	}
 }
 

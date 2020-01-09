@@ -37,7 +37,7 @@ void Mine::MineCreate(int Level)
 		break;
 	}
 	TileList = new GAME_TILE[TileCount];
-	for (int i = 0; i < TileCount; i++) { TileList[i].MineState = false; TileList[i].Openstatus = false; }
+	for (int i = 0; i < TileCount; i++) { TileList[i].MineState = false; TileList[i].Openstatus = false; TileList[i].FlagStatus == false; }
 	for (int y = 0; y < Height; y++)
 	{
 		for (int x = 0; x < Width; x += 2)
@@ -52,7 +52,11 @@ void Mine::MineCreate(int Level)
 		Rnum = rand() % TileCount;
 		if (TileList[Rnum].MineState == true) //·£´ýÇÑ Å¸ÀÏÀÌ ÀÌ¹Ì Áö·ÚÀÏ°æ¿ì i¸¦ 1 »©Áà¼­ ´Ù½Ãµ¹¸²
 			i--;
-		else { TileList[Rnum].MineState = true; TileList[Rnum].NearMineCount = 99; }
+		else 
+		{
+			TileList[Rnum].MineState = true; 
+			TileList[Rnum].NearMineCount = -1; 
+		}
 
 	}
 	for (int i = 0; i < TileCount; i++)
@@ -82,7 +86,7 @@ void Mine::MineCreate(int Level)
 
 void Mine::TileOpen(int TileNum)
 {
-	if (TileList[TileNum].Openstatus == false)
+	if (TileList[TileNum].Openstatus != true)
 	{
 		gotoxy(TileList[TileNum].x, TileList[TileNum].y);
 		cout << TileList[TileNum].Icon;
@@ -178,18 +182,39 @@ void Mine::MineSearch(int TileNum, int num)
 	{
 		if (TileList[TileNum].NearMineCount == 0)
 			MineSearch(TileNum + num, num);
-		//else if (TileList[TileNum].NearMineCount != 0)
-		//	return;
-		else if (TileList[TileNum].x == 0)
+		 if (TileList[TileNum].x == 0)
 			return;
-		else if (TileList[TileNum].x == Width)
+		 if (TileList[TileNum].x == Width)
 			return;
-		else if (TileList[TileNum].y == 0)
+		 if (TileList[TileNum].y == 0)
 			return;
-		else if (TileList[TileNum].y == Height)
+		 if (TileList[TileNum].y == Height)
 			return;
-		NearTileOpen(TileNum);
+		 if (TileNum + num <0 || TileNum + num >80)
+			 return;
+		 NearTileOpen(TileNum);
 	}
+}
+
+bool Mine::WinCheck()
+{
+	int WinCount = 0;
+	for (int i = 0; i < TileCount; i++)
+	{
+		if (TileList[i].Openstatus == true)
+		{
+			WinCount++;
+		}
+	}
+	if (WinCount == TileCount - MineCount)
+	{
+		system("pasuse");
+		system("cls");
+		gotoxy(10, 5);
+		cout << "°ÔÀÓ ½Â¸®!";
+		return false;
+	}
+	return true;
 }
 
 int Mine::NearMineSearch(int ListNum)
@@ -234,7 +259,9 @@ int Mine::NearMineSearch(int ListNum)
 bool Mine::MineCheck(int TileNum)
 {
 	if (TileList[TileNum].MineState == true)
+	{
 		return true;
+	}
 	return false;
 }
 Mine::~Mine()
