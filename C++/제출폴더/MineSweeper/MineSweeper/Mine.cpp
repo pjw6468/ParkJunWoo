@@ -182,6 +182,8 @@ void Mine::MineSearch(int TileNum, int num)
 	{
 		if (TileList[TileNum].NearMineCount == 0)
 			MineSearch(TileNum + num, num);
+		//if (TileList[TileNum].NearMineCount != 0)
+		//	return;
 		 if (TileList[TileNum].x == 0)
 			return;
 		 if (TileList[TileNum].x == Width)
@@ -214,7 +216,6 @@ bool Mine::WinCheck()
 		cout << "°ÔÀÓ ½Â¸®!";
 		return false;
 	}
-	return true;
 }
 
 int Mine::NearMineSearch(int ListNum)
@@ -262,6 +263,7 @@ bool Mine::MineCheck(int TileNum)
 	{
 		return true;
 	}
+	else
 	return false;
 }
 Mine::~Mine()

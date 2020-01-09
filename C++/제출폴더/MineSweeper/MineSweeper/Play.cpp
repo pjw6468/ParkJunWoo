@@ -44,8 +44,8 @@ void Play::Playing()
 		if (Select == CURSOR_OPEN)
 		{
 			if (MineCheck(ReturnTileNum()) == true && TileList[ReturnTileNum()].FlagStatus != true)
-				m_bGameFlag = true;
-			else
+				m_bGameFlag = false;
+			else if(MineCheck(ReturnTileNum())==false&&TileList[ReturnTileNum()].FlagStatus!=true)
 			{
 				if (TileList[ReturnTileNum()].Openstatus == false && TileList[ReturnTileNum()].FlagStatus != true)
 				{
@@ -69,7 +69,8 @@ void Play::Playing()
 				cout << "бс";
 			}
 		}
-		m_bGameFlag = WinCheck();
+		if (WinCheck() == false)
+			m_bGameFlag = false;
 	}
 }
 
