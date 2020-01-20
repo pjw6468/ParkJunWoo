@@ -65,7 +65,7 @@ void Cursor::CursorSet(int Level)
 	case 3:
 		x = 0;
 		y = 0;
-		Width = 32;
+		Width = 60;
 		Height = 16;
 		TIleNumPM = 30;
 		break;

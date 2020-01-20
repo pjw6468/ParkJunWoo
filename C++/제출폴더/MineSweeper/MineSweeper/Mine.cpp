@@ -57,8 +57,7 @@ void Mine::MineCreate(int Level)
 			TileList[Rnum].MineState = true; 
 			TileList[Rnum].NearMineCount = -1; 
 		}
-
-	}
+	}	
 	for (int i = 0; i < TileCount; i++)
 	{
 		TileList[i].NearMineCount = NearMineSearch(i);
@@ -137,6 +136,44 @@ void Mine::NearTileOpen(int TileNum)
 		if (TileList[TileNum].y != Height - 1 && TileList[TileNum].x != Width - 2 && TileList[TileNum + 10].MineState == false) //오른아래 Y가 맨 아래일땐 동작 X
 			TileOpen(TileNum + 10);
 	}
+	if (GameLevel == GAME_LEVEL_NORMAL)
+	{
+		if (TileList[TileNum].y != 0 && TileList[TileNum].x != 0 && TileList[TileNum - 17].MineState == false) //왼쪽위 Y가 0일땐 동작X
+			TileOpen(TileNum - 17);
+		if (TileList[TileNum].y != 0 && TileList[TileNum - 16].MineState == false) //위 Y가 0일땐 동작 X
+			TileOpen(TileNum - 16);
+		if (TileList[TileNum].y != 0 && TileList[TileNum].x != Width - 2 && TileList[TileNum - 15].MineState == false) //오른위 Y가 0일땐 동작 X
+			TileOpen(TileNum - 15);
+		if (TileList[TileNum].x != 0 && TileList[TileNum - 1].MineState == false) //왼쪽 X가 0일땐 동작 X
+			TileOpen(TileNum - 1);
+		if (TileList[TileNum].x != Width - 2 && TileList[TileNum + 1].MineState == false) //오른쪽 X가 오른쪽 끝일땐 동작X
+			TileOpen(TileNum + 1);
+		if (TileList[TileNum].y != Height - 1 && TileList[TileNum].x != 0 && TileList[TileNum + 15].MineState == false) //왼아래 Y가 맨 아래일땐 동작 X
+			TileOpen(TileNum + 15);
+		if (TileList[TileNum].y != Height - 1 && TileList[TileNum + 16].MineState == false) //아래 Y가 맨 아래일땐 동작 X
+			TileOpen(TileNum + 16);
+		if (TileList[TileNum].y != Height - 1 && TileList[TileNum].x != Width - 2 && TileList[TileNum + 17].MineState == false) //오른아래 Y가 맨 아래일땐 동작 X
+			TileOpen(TileNum + 17);
+	}
+	if (GameLevel == GAME_LEVEL_HARD)
+	{
+		if (TileList[TileNum].y != 0 && TileList[TileNum].x != 0 && TileList[TileNum -31].MineState == false) //왼쪽위 Y가 0일땐 동작X
+			TileOpen(TileNum - 31);
+		if (TileList[TileNum].y != 0 && TileList[TileNum - 30].MineState == false) //위 Y가 0일땐 동작 X
+			TileOpen(TileNum - 30);
+		if (TileList[TileNum].y != 0 && TileList[TileNum].x != Width - 2 && TileList[TileNum -29].MineState == false) //오른위 Y가 0일땐 동작 X
+			TileOpen(TileNum - 29);
+		if (TileList[TileNum].x != 0 && TileList[TileNum - 1].MineState == false) //왼쪽 X가 0일땐 동작 X
+			TileOpen(TileNum - 1);
+		if (TileList[TileNum].x != Width - 2 && TileList[TileNum + 1].MineState == false) //오른쪽 X가 오른쪽 끝일땐 동작X
+			TileOpen(TileNum + 1);
+		if (TileList[TileNum].y != Height - 1 && TileList[TileNum].x != 0 && TileList[TileNum + 29].MineState == false) //왼아래 Y가 맨 아래일땐 동작 X
+			TileOpen(TileNum + 29);
+		if (TileList[TileNum].y != Height - 1 && TileList[TileNum + 30].MineState == false) //아래 Y가 맨 아래일땐 동작 X
+			TileOpen(TileNum + 30);
+		if (TileList[TileNum].y != Height - 1 && TileList[TileNum].x != Width - 2 && TileList[TileNum + 31].MineState == false) //오른아래 Y가 맨 아래일땐 동작 X
+			TileOpen(TileNum + 31);
+	}
 }
 
 void Mine::MineSearchManage(int TileNum)
@@ -178,12 +215,8 @@ void Mine::MineSearchManage(int TileNum)
 
 void Mine::MineSearch(int TileNum, int num)
 {
-	if (GameLevel == GAME_LEVEL_EASY) //쉬움 난이도일경우
-	{
 		if (TileList[TileNum].NearMineCount == 0)
 			MineSearch(TileNum + num, num);
-		//if (TileList[TileNum].NearMineCount != 0)
-		//	return;
 		 if (TileList[TileNum].x == 0)
 			return;
 		 if (TileList[TileNum].x == Width)
@@ -192,10 +225,9 @@ void Mine::MineSearch(int TileNum, int num)
 			return;
 		 if (TileList[TileNum].y == Height)
 			return;
-		 if (TileNum + num <0 || TileNum + num >80)
+		 if (TileNum + num <0 || TileNum + num >TileCount)
 			 return;
 		 NearTileOpen(TileNum);
-	}
 }
 
 bool Mine::WinCheck()
@@ -246,13 +278,43 @@ int Mine::NearMineSearch(int ListNum)
 
 	if (GameLevel == GAME_LEVEL_NORMAL) //보통 난이도일경우
 	{
-
+		if (TileList[ListNum].y != 0 && TileList[ListNum].x != 0 && TileList[ListNum - 17].MineState == true) //왼쪽위 Y가 0일땐 동작X
+			Count++;
+		if (TileList[ListNum].y != 0 && TileList[ListNum - 16].MineState == true) //위 Y가 0일땐 동작 X
+			Count++;
+		if (TileList[ListNum].y != 0 && TileList[ListNum].x != Width - 2 && TileList[ListNum - 15].MineState == true) //오른위 Y가 0일땐 동작 X
+			Count++;
+		if (TileList[ListNum].x != 0 && TileList[ListNum - 1].MineState == true) //왼쪽 X가 0일땐 동작 X
+			Count++;
+		if (TileList[ListNum].x != Width - 2 && TileList[ListNum + 1].MineState == true) //오른쪽 X가 오른쪽 끝일땐 동작X
+			Count++;
+		if (TileList[ListNum].y != Height - 1 && TileList[ListNum].x != 0 && TileList[ListNum + 15].MineState == true) //왼아래 Y가 맨 아래일땐 동작 X
+			Count++;
+		if (TileList[ListNum].y != Height - 1 && TileList[ListNum + 16].MineState == true) //아래 Y가 맨 아래일땐 동작 X
+			Count++;
+		if (TileList[ListNum].y != Height - 1 && TileList[ListNum].x != Width - 2 && TileList[ListNum + 17].MineState == true) //오른아래 Y가 맨 아래일땐 동작 X
+			Count++;
 	}
 
 
 	if (GameLevel == GAME_LEVEL_HARD) // 어려움 난이도일경우
 	{
-
+		if (TileList[ListNum].y != 0 && TileList[ListNum].x != 0 && TileList[ListNum - 31].MineState == true) //왼쪽위 Y가 0일땐 동작X
+			Count++;
+		if (TileList[ListNum].y != 0 && TileList[ListNum - 30].MineState == true) //위 Y가 0일땐 동작 X
+			Count++;
+		if (TileList[ListNum].y != 0 && TileList[ListNum].x != Width - 2 && TileList[ListNum - 29].MineState == true) //오른위 Y가 0일땐 동작 X
+			Count++;
+		if (TileList[ListNum].x != 0 && TileList[ListNum - 1].MineState == true) //왼쪽 X가 0일땐 동작 X
+			Count++;
+		if (TileList[ListNum].x != Width - 2 && TileList[ListNum + 1].MineState == true) //오른쪽 X가 오른쪽 끝일땐 동작X
+			Count++;
+		if (TileList[ListNum].y != Height - 1 && TileList[ListNum].x != 0 && TileList[ListNum + 29].MineState == true) //왼아래 Y가 맨 아래일땐 동작 X
+			Count++;
+		if (TileList[ListNum].y != Height - 1 && TileList[ListNum + 30].MineState == true) //아래 Y가 맨 아래일땐 동작 X
+			Count++;
+		if (TileList[ListNum].y != Height - 1 && TileList[ListNum].x != Width - 2 && TileList[ListNum + 31].MineState == true) //오른아래 Y가 맨 아래일땐 동작 X
+			Count++;
 	}
 	return Count;
 }
